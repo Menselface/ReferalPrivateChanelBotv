@@ -1,0 +1,1 @@
+from .accept_terms import accept_terms_kb
