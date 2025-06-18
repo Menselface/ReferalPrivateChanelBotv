@@ -20,7 +20,7 @@ class Users(Base):
 
     ref_by: Mapped[int | None] = mapped_column(BIGINT, ForeignKey("partners.user_id"), nullable=True)
     joined_paid_channel: Mapped[bool] = mapped_column(default=False)
-    is_active: Mapped[bool] = mapped_column(default=True)  # true, если всё ещё в канале
+    is_active: Mapped[bool] = mapped_column(default=True)
 
     created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

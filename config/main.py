@@ -11,14 +11,13 @@ class ConfigBase(BaseSettings):
         extra="ignore"
     )
 
-
-
 class TelegramConfig(ConfigBase):
     model_config = SettingsConfigDict(
         env_prefix="TG_"
     )
     bot_token: str
     chat_id: str
+    chat_paid_ids: List[int]
     chat_link: str
     admins: List[int]
 

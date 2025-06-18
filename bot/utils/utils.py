@@ -11,7 +11,6 @@ async def identify_myself() -> str:
             return (
                 f'IP: {location["ip"]}, '
                 f'Location: {location["city"]}, '
-                f'{location["region"]}, '
                 f'{location["country_name"]}'
             )
     except:

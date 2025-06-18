@@ -42,9 +42,37 @@ class PartnersRepository:
         result = await session.execute(stmt)
         return result.scalar_one_or_none()
 
-    async def increment_paid(self, session: AsyncSession, user_id: int):
+class PartnerStats(PartnersRepository):
+
+    @staticmethod
+    async def increment_invites_total(session: AsyncSession, user_id: int):
         user =  await session.get(Partners, user_id)
         if not user:
             return
         user.invites_total += 1
         await session.commit()
+
+    @staticmethod
+    async def increment_invites_paid(session: AsyncSession, user_id: int):
+        user = await session.get(Partners, user_id)
+        if not user:
+            return
+        user.invites_paid += 1
+        await session.commit()
+
+    @staticmethod
+    async def   increment_invites_current(session: AsyncSession, user_id: int):
+        user = await session.get(Partners, user_id)
+        if not user:
+            return
+        user.invites_current += 1
+        await session.commit()
+
+    @staticmethod
+    async def decrement_invites_current(session: AsyncSession, user_id: int):
+        user =  await session.get(Partners, user_id)
+        if not user:
+            return
+        if user.invites_current > 0:
+            user.invites_current -= 1
+            await session.commit()

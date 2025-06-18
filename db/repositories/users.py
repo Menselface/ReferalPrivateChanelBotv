@@ -1,10 +1,7 @@
-from datetime import datetime, timedelta, timezone
-from typing import List, Any, Coroutine, Sequence, Type
+from typing import Sequence, Type
 
-from loguru import logger
-from sqlalchemy import select, update
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.sql.dml import ReturningUpdate
 
 from db.models.users import Users
 from db.session import async_session_maker
@@ -41,3 +38,4 @@ class UserRepository:
     @staticmethod
     async def get_user_by_id(session: AsyncSession, user_id: int)-> Type[Users] | None:
         return await session.get(Users, user_id)
+

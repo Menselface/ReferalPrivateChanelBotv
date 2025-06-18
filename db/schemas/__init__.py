@@ -1,1 +1,1 @@
-from .user import UserCreateDTO
+from .user import UserCreateDTO, UserInvitedCreateDTO
