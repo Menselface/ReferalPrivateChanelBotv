@@ -16,7 +16,7 @@ class PartnersService:
         existing_user = await self.repo.get_partner_by_id(session, user_data.user_id)
 
         if existing_user:
-            await self.repo.update_partner(session, user_data.user_id, user_data.model_dump())
+            return False
         else:
             new_user = Partners(**user_data.model_dump())
             await self.repo.add_partner(session, new_user)
@@ -32,10 +32,18 @@ class PartnersService:
 
     async def update_user_ref_link(self, session: AsyncSession, user_id: int, invite_link: str):
         partner = await self.repo.get_partner_by_id(session, user_id)
-        if not partner or partner.tribute_link:
-            return
+        if not partner:
+            return False
 
-        # ref_link = f"{config.telegram.chat_link}?start={partner.ref_token}"
+        await self.repo.update_partner_fields(
+            session, user_id, {"ref_token": invite_link}
+        )
+        return partner.ref_token
+
+    async def update_tribute_link(self, session: AsyncSession, user_id: int, invite_link: str):
+        partner = await self.repo.get_partner_by_id(session, user_id)
+        if not partner:
+            return False
 
         await self.repo.update_partner_fields(
             session, user_id, {"tribute_link": invite_link}
@@ -57,7 +65,7 @@ class GetPartner(PartnersService):
         total = partner.invites_total
         paid = partner.invites_paid
         current = partner.invites_current
-        user_ref = partner.tribute_link
+        user_ref = partner.ref_token
 
         return (
             "📊 <b>Ваша статистика:</b>\n\n"

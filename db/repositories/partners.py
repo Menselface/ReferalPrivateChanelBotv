@@ -38,7 +38,7 @@ class PartnersRepository:
 
     @staticmethod
     async def get_by_invite_link(session: AsyncSession, link: str):
-        stmt = select(Partners).where(Partners.tribute_link == link)
+        stmt = select(Partners).where(Partners.ref_token == link)
         result = await session.execute(stmt)
         return result.scalar_one_or_none()
 

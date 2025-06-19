@@ -9,6 +9,7 @@ from bot.handlers import accepted_terms, start_command_handler
 from bot.handlers.admin import admin_router
 from bot.handlers.chat_member import chat_member_router
 from bot.handlers.commands import commands_router
+from bot.handlers.registration_partner import registration_partner_router
 from bot.middleware import DbSessionMiddleware
 from bot.utils import logger, identify_myself
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -26,7 +27,8 @@ dp.chat_member.middleware(DbSessionMiddleware())
 dp.include_routers(chat_member_router,
                             accepted_terms,
                             commands_router,
-                            admin_router
+                            admin_router,
+                            registration_partner_router
                    )
 
 
