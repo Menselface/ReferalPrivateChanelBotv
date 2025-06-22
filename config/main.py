@@ -33,11 +33,15 @@ class LoggerConfig(ConfigBase):
     )
     logger: str
 
+class ConditionsLink(ConfigBase):
+    conditions_link: str
+
 
 class AppConfig(BaseSettings):
     telegram: TelegramConfig = Field(default_factory=TelegramConfig)
     db: DataBaseConfig = Field(default_factory=DataBaseConfig)
     logger: LoggerConfig = Field(default_factory=LoggerConfig)
+    agreements: ConditionsLink = Field(default_factory=ConditionsLink)
 
     @classmethod
     def load(cls) -> "AppConfig":
