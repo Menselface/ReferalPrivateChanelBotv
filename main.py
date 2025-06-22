@@ -28,7 +28,7 @@ dp.include_routers(chat_member_router,
                             accepted_terms,
                             commands_router,
                             admin_router,
-                            registration_partner_router
+                                registration_partner_router
                    )
 
 
