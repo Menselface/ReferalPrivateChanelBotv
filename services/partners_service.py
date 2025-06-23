@@ -50,6 +50,16 @@ class PartnersService:
         )
         return partner.tribute_link
 
+    async def update_tribute_link_2(self, session: AsyncSession, user_id: int, invite_link: str):
+        partner = await self.repo.get_partner_by_id(session, user_id)
+        if not partner:
+            return False
+
+        await self.repo.update_partner_fields(
+            session, user_id, {"tribute_link_2": invite_link}
+        )
+        return partner.tribute_link
+
     @staticmethod
     async def check_user_is_admin(user_id: int):
         admins_list = config.telegram.admins

@@ -22,6 +22,7 @@ class Partners(Base):
     ref_token: Mapped[str] = mapped_column(String(64), unique=True, index=True)
 
     tribute_link: Mapped[str | None] = mapped_column(String(255))
+    tribute_link_2: Mapped[str | None] = mapped_column(String(255))
 
     invites_total: Mapped[int] = mapped_column(Integer, default=0)
     invites_paid: Mapped[int] = mapped_column(Integer, default=0)
