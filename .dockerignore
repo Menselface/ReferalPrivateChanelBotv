@@ -25,4 +25,4 @@ dist/
 build/
 
 # env
-.env
+settings/.env
