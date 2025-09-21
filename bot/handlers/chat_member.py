@@ -3,6 +3,7 @@ from aiogram.types import ChatMemberUpdated
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from bot.utils import format_user_name
 from config import config
 from db.repositories.partners import PartnersRepository, PartnerStats
 from db.schemas import UserInvitedCreateDTO
@@ -62,9 +63,10 @@ async def on_join(event: ChatMemberUpdated, session: AsyncSession, bot: Bot):
                     last_name=user.last_name,
                     ref_by=partner.user_id
                 )
+                name = await format_user_name(user)
                 logger.info(
-                    f"Пользователь вступил в группу {user.username or user.first_name or user.id}")
+                    f"Пользователь вступил в группу {name}")
                 await PartnerStats().increment_invites_total(session, partner.user_id)
                 await UserService().register_or_update_user(session, user_dto)
-                await bot.send_message(partner.user_id, f"🎉 {user.username or user.first_name or user.last_name or user.id} вступил по вашей ссылке!")
+                await bot.send_message(partner.user_id, f"🎉 {name} вступил по вашей ссылке!")
 
