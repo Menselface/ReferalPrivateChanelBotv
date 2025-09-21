@@ -62,6 +62,8 @@ async def on_join(event: ChatMemberUpdated, session: AsyncSession, bot: Bot):
                     last_name=user.last_name,
                     ref_by=partner.user_id
                 )
+                logger.info(
+                    f"Пользователь вступил в группу {user.username or user.first_name or user.id}")
                 await PartnerStats().increment_invites_total(session, partner.user_id)
                 await UserService().register_or_update_user(session, user_dto)
                 await bot.send_message(partner.user_id, f"🎉 {user.username or user.first_name or user.last_name or user.id} вступил по вашей ссылке!")
